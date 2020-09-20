@@ -646,6 +646,7 @@ void Versus(){
 			else {
 			u= FirstTeam.size();
 			}
+			int down = 33+ First->GetName().size() ;
 			int FrstScore=0;
 			int ScndScore=0;
 //<<<<<<< HEAD
@@ -658,7 +659,28 @@ void Versus(){
 			for (int i=0 ; i<u;i++){
 				FrstScore+=FirstTeam.at(i);
 				ScndScore+=SecondTeam.at(i);
-				cout << First->GetPlayerName(i) << " " << FirstTeam.at(i) << "                      " << Second->GetPlayerName(i) << " " << SecondTeam.at(i) << endl << endl;
+
+
+				for (int j = 0; j<First->GetPlayerName(i).size(); j++){
+				cout << First->GetPlayerName(i).at(j);
+				down--;
+			}
+			cout << " " << FirstTeam.at(i);
+			while(down>0){
+				cout << " ";
+				down--;
+			}
+			if (down==0){
+down =33+ First->GetName().size();
+}
+			cout << Second->GetPlayerName(i) << " " << SecondTeam.at(i) << endl << endl;
+			
+
+
+
+
+
+
 			}
 //<<<<<<< HEAD
 			cout << endl<< endl<< endl;

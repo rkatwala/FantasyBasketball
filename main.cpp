@@ -509,7 +509,7 @@ void Versus(){
                 int FrstScore=0;
                 int ScndScore=0;
 
-                cout << endl;
+     //           cout << endl;
 
                 cout << endl << endl << line  << endl <<  "Team " << First->GetName() <<"              vs               " << "Team " << Second->GetName() << endl<< endl;
 
@@ -547,29 +547,13 @@ void Versus(){
                 firstmenu();
             }
             
-            else{
-                cout <<endl<< "   Tie" << endl<< endl << endl;
             
-                cout << "                       Total"<< endl;
-                cout << FrstScore << "                                                   " << ScndScore<< endl << endl;
-            if (FrstScore> ScndScore){
-                cout << "Team " << First->GetName() << " wins"<< endl;
-                cout << line  << endl << endl;
-                firstmenu();
-            }
-            else if (FrstScore< ScndScore){
-                cout << "Team " << Second->GetName() << " wins"<< endl;
-                cout<< line  << endl << endl;
-                firstmenu();
-            }
             else{
                 cout << "Tie" << endl;
                 cout<<line  << endl << endl;
                 firstmenu();
             }
-
         }
-    }
     
     
         else {

@@ -1,5 +1,5 @@
 #ifndef __SFPFPPG_HPP__
-#define __SFPFPG_HPP__
+#define __SFPFPPG_HPP__
 
 #include "PpgBase.hpp"
 

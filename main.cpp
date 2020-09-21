@@ -132,10 +132,10 @@ int main( ) {
     sort();
 
 
-    int temp=0;
-    cout << "Would you like to resume last game or start a new game. Press 1 to continue 2 to restart " << endl;
+    string temp="0";
+    cout << "Press 1 to resume your last game, press any other button to restart." << endl;
     cin >> temp;
-    if (temp ==1 ){
+    if (temp =="1" ){
         Resume();
          
     }

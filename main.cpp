@@ -14,7 +14,9 @@ static vector<Player*> Power;
 static vector<Player*> Center;
 static vector<Team*> TeamList;
 
-
+void CreateRandomTeam();
+void DeleteTeam(int);
+void Tourny();
 void Resume();
 void sort( );
 void SaveTeam(Team*);
@@ -37,7 +39,9 @@ void  firstmenu(){
          cout << "1. Create New Team"<<endl;
          cout << "2. Resume Old Team" << endl;
          cout << "3. Faceoff" << endl;
-         cout << "4. Restart League"<< endl;
+	 cout << "4. Delete a Team" << endl;
+    cout << "5. Tournament" << endl;
+         cout << "6. Restart League"<< endl;
 
          cin >> choice;
          string tempName;
@@ -49,6 +53,11 @@ void  firstmenu(){
              TeamList.push_back(temp);
              menu(TeamList.back());
          }
+	else if (choice == "5"){
+	Tourny();
+	//	CreateRandomTeam();
+		firstmenu();
+	}
          else if (choice == "2"){
         
              if(TeamList.size() == 0){
@@ -76,18 +85,29 @@ void  firstmenu(){
                  }
              }
          }
-         else if(choice == "3"){
-             Versus();
-    }
+	else if(choice == "3"){
+       		Versus();
+    	}
 
+	else if(choice == "4"){
+        for (int i=0; i<TeamList.size();i++){
+            cout << i+1 << ". " << TeamList.at(i)->GetName() << endl;
+        }
 
-    else if(choice != "4"){
-        cout << "Invalid input, try again" << endl;
+        int j=0;
+        cout << endl << "Select the number of the team you'd like to delete" << endl;
+        cin >> j;
+		DeleteTeam(j);
         firstmenu();
-    }
-    else{
-        cout << "Thanks for playing" << endl;
-    }
+	}
+    
+	else if(choice != "6"){
+       		cout << "Invalid input, try again" << endl;
+       		firstmenu();
+    	}
+	else{
+      		cout << "Thanks for playing" << endl;
+	}
 }
          
   
@@ -438,6 +458,8 @@ void addPlayer(vector<Player*>& j, Team* r, string pos){
         }
     }
 }
+
+
 void Versus(){
 
         Team *First;
@@ -761,7 +783,388 @@ void Resume(){
 }
 
 
+void DeleteTeam(int j){
 
+
+
+        TeamList.erase(TeamList.begin()+(j-1));
+	//firstmenu();
+}
+
+void CreateRandomTeam(){
+	int j = TeamList.size()+1;	
+	string TeamName ="Team " +  to_string(j);
+	Team* NewTeam = new Team(TeamName);
+	TeamList.push_back(NewTeam);
+	
+	int RandomPlayerPos = rand() % Point.size();
+	TeamList.at(TeamList.size()-1)->AddPlayer(Point.at(RandomPlayerPos));
+     Point.erase(Point.begin()+RandomPlayerPos);
+	 RandomPlayerPos = rand() % Shoot.size();
+    TeamList.at(TeamList.size()-1)->AddPlayer(Shoot.at(RandomPlayerPos));
+    Shoot.erase(Shoot.begin()+RandomPlayerPos);
+        RandomPlayerPos = rand() % Small.size();
+        TeamList.at(TeamList.size()-1)->AddPlayer(Small.at(RandomPlayerPos));
+         Small.erase(Small.begin()+RandomPlayerPos);
+         RandomPlayerPos = rand() % Power.size();
+        TeamList.at(TeamList.size()-1)->AddPlayer(Power.at(RandomPlayerPos));
+         Power.erase(Power.begin()+RandomPlayerPos);
+        RandomPlayerPos = rand() % Center.size();
+        TeamList.at(TeamList.size()-1)->AddPlayer(Center.at(RandomPlayerPos));
+     Center.erase(Center.begin()+RandomPlayerPos);
+	
+	return;
+	
+	
+}
+int total(vector<int>);
+
+int total(vector<int> TeamScore){
+	int total=0;
+	for (int i=0; i < TeamScore.size();i++){
+		total+=TeamScore.at(i);
+     //   cout << TeamScore.at(i) << " ";
+	}
+   // cout << endl;
+	return total;
+}
+
+
+
+
+
+void Print(string);
+void Print(string x){
+
+	int Total = 22;
+
+	Total = Total - x.size(); 
+	cout << x;
+
+	while(Total!=0){
+		cout << " ";
+		Total--;
+
+	}
+	cout << "|";
+	Total = 77+25;
+	while(Total != 0){
+		
+		cout << " ";
+		Total--;
+	}
+	cout << "| ";
+		
+}
+
+
+
+
+void Tourny(){
+    vector<Team*> TeamsList;
+	int TeamCount = 0;
+	
+    for(int i=0;i<TeamList.size();i++){
+        
+        if(TeamList.at(i)->TeamSize()==5){
+            //TeamsList.push_back(TeamList.at(i));
+            TeamCount++;
+        }
+    }
+    int TeamRemaining = TeamList.size();
+	while(TeamCount!=8){
+		CreateRandomTeam();
+		TeamCount++;
+	}
+    for(int i=0;i<TeamList.size();i++){
+        if(TeamList.at(i)->TeamSize()==5){
+            TeamsList.push_back(TeamList.at(i));
+            //TeamCount++;
+        }
+    }
+    for(int i=TeamRemaining-1; i<TeamList.size();i++){
+        TeamList.erase(TeamList.begin()+i);
+    }
+    vector<int> score;
+    
+	vector<int>Team1;
+	vector<int>Team2;
+	vector<int> Team3;
+	vector <int> Team4;
+	vector<int>Team5;
+    vector<int>Team6;
+    vector<int> Team7;
+    vector <int> Team8;
+	vector <int> totals;
+	TeamsList.at(0)->FaceOff(Team1);
+ 	TeamsList.at(1)->FaceOff(Team2);
+
+	if (total(Team1) > total(Team2)){
+		totals.push_back(0);
+	}
+	else{
+		totals.push_back(1);
+	}
+    
+    score.push_back(total(Team1));
+	score.push_back(total(Team2));
+    
+    
+	TeamsList.at(4)->FaceOff(Team3);
+    TeamsList.at(5)->FaceOff(Team4);
+
+        if (total(Team3) > total(Team4)){
+                totals.push_back(4);
+        }
+        else{
+                totals.push_back(5);
+        }
+    
+    score.push_back(total(Team3));
+    score.push_back(total(Team4));
+    
+	TeamsList.at(2)->FaceOff(Team5);
+        TeamsList.at(3)->FaceOff(Team6);
+        TeamsList.at(6)->FaceOff(Team7);
+        TeamsList.at(7)->FaceOff(Team8);
+        if (total(Team5) > total(Team6)){
+                totals.push_back(2);
+        }
+        else{
+                totals.push_back(3);
+        }
+
+       if (total(Team7) > total(Team8)){
+                totals.push_back(6);
+        }
+        else{
+                totals.push_back(7);
+        }
+	
+    score.push_back(total(Team5));
+    score.push_back(total(Team6));
+    score.push_back(total(Team7));
+    score.push_back(total(Team8));
+    
+    
+    
+	TeamsList.at(totals.at(0))->FaceOff(Team1);
+	 TeamsList.at(totals.at(2))->FaceOff(Team2);
+
+        if (total(Team1) > total(Team2)){
+                totals.push_back(totals.at(0));
+        }
+        else{
+                totals.push_back(totals.at(2));
+        }
+    score.push_back(total(Team1));
+     score.push_back(total(Team2));
+    
+        TeamsList.at(totals.at(1))->FaceOff(Team1);
+         TeamsList.at(totals.at(3))->FaceOff(Team2);
+
+        if (total(Team1) > total(Team2)){
+                totals.push_back(totals.at(1));
+        }
+        else{
+                totals.push_back(totals.at(3));
+        }
+    score.push_back(total(Team1));
+     score.push_back(total(Team2));
+
+    vector<int> one;
+    vector<int> two;
+    
+	 TeamsList.at(totals.at(4))->FaceOff(one);
+         TeamsList.at(totals.at(5))->FaceOff(two);
+
+        if (total(one) > total(two)){
+                totals.push_back(totals.at(4));
+        }
+        else{
+                totals.push_back(totals.at(5));
+        }
+    score.push_back(total(one));
+     score.push_back(total(two));
+
+
+	
+
+
+	
+	Print(TeamList.at(0)->GetPlayerName(0) );
+	cout  << TeamsList.at(4)->GetPlayerName(0) << endl;
+	Print( TeamsList.at(0)->GetPlayerName(1));
+	cout  << TeamsList.at(4)->GetPlayerName(1) << endl;
+    
+    int temp = 22 - TeamsList.at(0)->GetPlayerName(2).size();
+    cout << TeamsList.at(0)->GetPlayerName(2);
+    while(temp!=0){
+        cout << " ";
+        temp--;
+    }
+    cout << "| " << TeamsList.at(0)->GetName() << " - " << score.at(0);
+    temp = 90 - TeamsList.at(0)->GetName().size() - TeamsList.at(4)->GetName().size();
+    while(temp!=0){
+        cout << " ";
+        temp--;
+    }
+    
+    cout << score.at(2) << " - " << TeamsList.at(4)->GetName() << " | " << TeamsList.at(4)->GetPlayerName(2) << endl;
+    
+	//cout << TeamList.at(0)->GetPlayerName(2) <<" | " << TeamList.at(0)->GetName() << "-" << total(Team1) <<  "                                                                             "<< total(Team3) << " - " << TeamList.at(4)->GetName() << " | " << TeamList.at(4)->GetPlayerName(2) << endl;
+    Print(TeamsList.at(0)->GetPlayerName(3));
+
+    cout << TeamsList.at(4)->GetPlayerName(3) << endl;
+
+    Print(TeamsList.at(0)->GetPlayerName(4));
+
+ cout << TeamsList.at(4)->GetPlayerName(4) << endl;
+
+    temp = 35;
+    while(temp!=0){
+        cout << " ";
+        temp--;
+    }
+    temp = 67 - TeamsList.at(totals.at(0))->GetName().size() - TeamsList.at(totals.at(1))->GetName().size();
+    cout  << TeamsList.at(totals.at(0))->GetName() <<" - " << score.at(8);
+    while(temp!=0){
+        cout << " ";
+        temp--;
+    }
+    
+    cout << score.at(10) << " - " <<  TeamsList.at(totals.at(1))->GetName()<< endl;
+	  
+    Print( TeamsList.at(1)->GetPlayerName(0));
+
+    cout << TeamsList.at(5)->GetPlayerName(0) << endl;
+
+    Print( TeamsList.at(1)->GetPlayerName(1));
+
+cout<< TeamsList.at(5)->GetPlayerName(1) << endl;
+
+    temp = 22 - TeamsList.at(1)->GetPlayerName(2).size();
+       cout << TeamsList.at(1)->GetPlayerName(2);
+       while(temp!=0){
+           cout << " ";
+           temp--;
+       }
+       cout << "| " << TeamsList.at(1)->GetName() << " - " << score.at(1);
+       temp = 90 - TeamsList.at(1)->GetName().size() - TeamsList.at(5)->GetName().size();
+       while(temp!=0){
+           cout << " ";
+           temp--;
+       }
+       
+       cout << score.at(3) << " - " << TeamsList.at(5)->GetName() << " | " << TeamsList.at(4)->GetPlayerName(2) << endl;
+ 
+
+        Print(TeamsList.at(1)->GetPlayerName(3));
+
+	 cout << TeamsList.at(5)->GetPlayerName(3) << endl;
+        
+    Print(TeamsList.at(1)->GetPlayerName(4));
+
+	 cout  << TeamsList.at(5)->GetPlayerName(4) << endl;
+	
+	cout << "                                              " << TeamsList.at(totals.at(4))->GetName() << " - " << score.at(12)<< "             " << TeamsList.at(totals.at(6))->GetName() << "                " << score.at(13) << " - " <<TeamsList.at(totals.at(5))->GetName() << endl;
+	
+
+
+
+    Print(TeamsList.at(2)->GetPlayerName(0));
+
+ cout << TeamsList.at(6)->GetPlayerName(0) << endl;
+
+        Print(TeamsList.at(2)->GetPlayerName(1));
+
+ cout << TeamsList.at(6)->GetPlayerName(1) << endl;
+
+     temp = 22 - TeamsList.at(2)->GetPlayerName(2).size();
+       cout << TeamsList.at(2)->GetPlayerName(2);
+       while(temp!=0){
+           cout << " ";
+           temp--;
+       }
+       cout << "| " << TeamsList.at(2)->GetName() << " - " << score.at(4);
+       temp = 90 - TeamsList.at(2)->GetName().size() - TeamsList.at(6)->GetName().size();
+       while(temp!=0){
+           cout << " ";
+           temp--;
+       }
+       
+       cout << score.at(6) << " - " << TeamsList.at(6)->GetName() << " | " << TeamsList.at(6)->GetPlayerName(2) << endl;
+    
+    
+    
+    Print(TeamsList.at(2)->GetPlayerName(3));
+
+ cout<< TeamsList.at(6)->GetPlayerName(3) << endl;
+
+        Print( TeamsList.at(2)->GetPlayerName(4));
+
+cout  << TeamsList.at(6)->GetPlayerName(4) << endl;
+    
+    
+    temp = 35;
+    while(temp!=0){
+        cout << " ";
+        temp--;
+    }
+    temp = 67 - TeamsList.at(totals.at(2))->GetName().size() - TeamsList.at(totals.at(3))->GetName().size();
+    cout  << TeamsList.at(totals.at(2))->GetName() <<" - " << score.at(9);
+    while(temp!=0){
+        cout << " ";
+        temp--;
+    }
+    
+    cout << score.at(11) << " - " <<  TeamsList.at(totals.at(3))->GetName()<< endl;
+    
+    
+
+  //      cout << "                    " << TeamList.at(totals.at(2))->GetName() << " - " << score.at(9) <<  "                                     " << score.at(11) << " - "<< TeamList.at(totals.at(3))->GetName()<< endl;
+
+    Print(TeamsList.at(3)->GetPlayerName(0));
+   cout << TeamsList.at(7)->GetPlayerName(0) << endl;
+    Print(TeamsList.at(3)->GetPlayerName(1));
+   cout << TeamsList.at(7)->GetPlayerName(1) << endl;
+    
+    temp = 22 - TeamsList.at(3)->GetPlayerName(2).size();
+       cout << TeamsList.at(3)->GetPlayerName(2);
+       while(temp!=0){
+           cout << " ";
+           temp--;
+       }
+       cout << "| " << TeamsList.at(3)->GetName() << " - " << score.at(5);
+       temp = 90 - TeamsList.at(3)->GetName().size() - TeamsList.at(7)->GetName().size();
+       while(temp!=0){
+           cout << " ";
+           temp--;
+       }
+       
+       cout << score.at(5) << " - " << TeamsList.at(7)->GetName() << " | " << TeamsList.at(4)->GetPlayerName(2) << endl;
+    //    cout << TeamList.at(3)->GetPlayerName(2) <<" | " << TeamList.at(1)->GetName() << "-" << total(Team1) <<  "                                                                             "<< total(Team3) << "-" << TeamList.at(7)->GetName() << " | " << TeamList.at(7)->GetPlayerName(2) << endl;
+
+        Print( TeamsList.at(3)->GetPlayerName(3));
+ cout << TeamsList.at(7)->GetPlayerName(3) << endl;
+        Print(TeamsList.at(3)->GetPlayerName(4));
+ cout  << TeamsList.at(7)->GetPlayerName(4) << endl;
+     
+
+  //  while(TeamRemaining!=0){
+    //    TeamList.erase(TeamList.size()-1);
+    //}
+
+    //firstmenu();
+    
+//	return;
+} 
+
+
+
+
+
+		
 
 
 

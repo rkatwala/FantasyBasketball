@@ -871,7 +871,7 @@ void Tourny(){
             TeamCount++;
         }
     }
-    int TeamRemaining = TeamList.size();
+    int TeamRemaining = 8-TeamCount;
 	while(TeamCount!=8){
 		CreateRandomTeam();
 		TeamCount++;
@@ -882,8 +882,9 @@ void Tourny(){
             //TeamCount++;
         }
     }
-    for(int i=TeamRemaining-1; i<TeamList.size();i++){
-        TeamList.erase(TeamList.begin()+i);
+    for(int i=TeamRemaining; i>0;i--){
+        int pos = TeamList.size();
+        DeleteTeam(pos);
     }
     vector<int> score;
     

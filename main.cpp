@@ -883,7 +883,7 @@ void Tourny(){
         }
     }
     for(int i=TeamRemaining; i>0;i--){
-        int pos = TeamList.size();
+        int pos = TeamList.size()-1;
         DeleteTeam(pos);
     }
     vector<int> score;

@@ -57,21 +57,18 @@ class Team:public Base {
 	
 	void FaceOff(vector<int>& stats){
 
-
+        
+        while(stats.size()>0){
         for(int i = 0; i < stats.size(); i++){
             stats.erase(stats.begin()+0);
         }
-        for(int i = 0; i < stats.size(); i++){
-            stats.erase(stats.begin()+0);
         }
-        for(int i = 0; i < stats.size(); i++){
-            stats.erase(stats.begin()+0);
-        }
-       // cout << "size of vec is " << stats.size()<< endl;
+       
+        //cout << "size of vec is " << stats.size()<< endl;
         
         double three;
-double fg;
-	srand(time(0));
+        double fg;
+        //srand(time(0));
         for(int i=0; i<list.size(); i++){
                 int a=0;
 		
@@ -79,13 +76,15 @@ double fg;
                         three = list.at(i)->FGPercent*100;
                         if(rand()%100<=three)
                                 a+=2;
+                   
                            }
                 for (int j=1; j<=list.at(i)->threePA; j++){
                         fg = list.at(i)->threeP*100;
                         if(rand()%100<=fg)
                                 a+=3;
+       
                            }
-
+           
                 stats.push_back(a);
 
         }

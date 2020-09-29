@@ -847,7 +847,20 @@ int total(vector<int> TeamScore){
 
 void Print(string, int);
 void Print(string x, int p){
-     p = 2;
+    if (p==1){
+        int Total = 22;
+
+        Total = Total - x.size();
+        cout << x;
+
+        while(Total!=0){
+            cout << " ";
+            Total--;
+
+        }
+        cout << "|                                         Winner!                                                      | ";
+    }
+    else {
     int Total = 22;
 
     Total = Total - x.size();
@@ -866,6 +879,8 @@ void Print(string x, int p){
         Total--;
     }
     cout << "| ";
+    }
+    
         
 }
 void Print(string);
@@ -896,7 +911,7 @@ void Print(string x){
 
 
 void Tourny(){
-    
+    cout << endl << endl;
     
     
     vector<Team*> TeamsList;
@@ -1151,7 +1166,7 @@ void Tourny(){
 
          cout << TeamsList.at(5)->GetPlayerName(3) << endl;
             
-        Print(TeamsList.at(1)->GetPlayerName(4));
+        Print(TeamsList.at(1)->GetPlayerName(4),1);
 
          cout  << TeamsList.at(5)->GetPlayerName(4) << endl;
         
@@ -1264,7 +1279,7 @@ void Tourny(){
         //}
 
         //firstmenu();
-        
+    cout << endl;
     //    return;
     }
 
@@ -1272,7 +1287,7 @@ void Tourny(){
 
 
 void tourny2(){
-    
+    cout << endl << endl;
     vector<Team*> TeamsList;
     int TeamCount = 0;
     
@@ -1455,7 +1470,7 @@ void tourny2(){
 
                             Print(TeamsList.at(1)->GetPlayerName(4),0);
 
-                         cout << TeamsList.at(3)->GetPlayerName(4) << endl;
+                         cout << TeamsList.at(3)->GetPlayerName(4) << endl << endl;
     
 }
 
